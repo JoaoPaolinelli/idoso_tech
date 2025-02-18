@@ -4,7 +4,7 @@ import 'package:idosotech/model/categoria.dart';
 class ApiService {
   final Dio dio = Dio();
   final String apiUrl =
-      "http://10.0.2.2:9090/categoria/listar"; // Use 10.0.2.2 para emuladores Android
+      "http://localhost:8080/categoria/listar"; // Use 10.0.2.2 para emuladores Android
 
   Future<List<Categoria>> fetchCategorias() async {
     try {

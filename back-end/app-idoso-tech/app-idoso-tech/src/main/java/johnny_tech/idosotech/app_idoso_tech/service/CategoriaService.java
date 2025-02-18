@@ -16,6 +16,11 @@ public class CategoriaService {
     public List<Categoria> listarCategorias() {
         System.out.println("Entrei aqui");
         List<Categoria> categorias = categoriaRepository.findAll();
+        
+
+        categorias.forEach(cat -> System.out.println());
+
+
         System.out.println("Tamanho da lista de categorias: "+ categorias.size());
         return categoriaRepository.findAll(); // Busca todas as categorias do MongoDB
     }
@@ -24,3 +29,5 @@ public class CategoriaService {
         return categoriaRepository.save(categoria); // Salva uma nova categoria
     }
 }
+
+
