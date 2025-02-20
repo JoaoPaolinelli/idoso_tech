@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import '../model/categoria.dart';
 import '../model/video.dart';
 import '../widgets/category_content_list_widget.dart';
@@ -33,31 +30,14 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
 
   @override
   void initState() {
-    super.initState();
-    _fetchVideos();
-  }
 
-  Future<void> _fetchVideos() async {
-    try {
-      final response =
-      await http.get(Uri.parse('http://localhost:8080/videos/show'));
-      print("YEEEEEEEEEEEEEEEEEEEAH");
-      print(widget.categoriaClasse.videos);
-      if (response.statusCode == 200) {
-        setState(() {
-          videos = jsonDecode(response.body);
-          isLoading = false;
-        });
-      } else {
-        throw Exception('Falha ao carregar os vídeos');
-      }
+    print('\n\n\n\n\n\n\n\n\n');
 
-    } catch (e) {
-      setState(() {
-        hasError = true;
-        isLoading = false;
-      });
-    }
+    print(widget.categoriaClasse.id);
+    print(widget.categoriaClasse.idCategoria);
+    print(widget.categoriaClasse.nomeCategoria);
+    print(widget.categoriaClasse.videos.map((video) => "\n,nome: ${video.nome},\n, link: ${video.link}").join("\n"));
+
   }
 
   @override

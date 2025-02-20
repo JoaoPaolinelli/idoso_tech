@@ -47,13 +47,13 @@ public class CategoriaService {
             }
             categoria.setVideos(videoCompilado);
         }
-
+        
+        
         for (Categoria cat : categorias) {
-            System.out.println("📌 Nova formatação dos vídeos:");
             ObjectMapper objectMapper = new ObjectMapper();
-
+            
             String printCategoria = objectMapper.writeValueAsString(cat);
-
+                        
             System.out.println(printCategoria);
         }
 

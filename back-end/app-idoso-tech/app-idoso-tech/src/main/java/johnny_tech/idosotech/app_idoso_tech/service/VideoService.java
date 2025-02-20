@@ -18,17 +18,6 @@ public class VideoService {
         return videoRepository.findAll();
     }
 
-    public List<Video> getVideoByCategory(String idCategoria) {
-        System.out.println("HOLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLYYYYYYYYYYYYYY");
-
-        List<Video> listaVideo = videoRepository.findByIdCategoria(idCategoria);
-
-        System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOooo");
-
-        listaVideo.forEach(video -> System.out.println(video));
-
-        return null;
-    }
    
     
 }

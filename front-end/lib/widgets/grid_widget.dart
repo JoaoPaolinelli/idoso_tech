@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:idosotech/model/categoria.dart';
 import 'package:idosotech/service/api_service.dart';
@@ -57,7 +59,7 @@ class _GridWidgetState extends State<GridWidget> {
         } else {
           print("   🎬 Vídeos:");
           for (var video in categoria.videos) {
-            print("      🎥 Nome: ${video.nome}, 🔗 Link: ${video.link}");
+            print(" 🎥 Nome: ${video.nome}, 🔗 Link: ${video.link}");
           }
         }
         print("----------------------------------------");
@@ -99,6 +101,7 @@ class _GridWidgetState extends State<GridWidget> {
                 child: FutureBuilder<List<Categoria>>(
                   future: categorias,
                   builder: (context, snapshot) {
+
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
@@ -107,8 +110,9 @@ class _GridWidgetState extends State<GridWidget> {
                       return Center(
                           child: Text('Nenhuma categoria encontrada.'));
                     }
-
                     List<Categoria> categoriasData = snapshot.data!;
+
+                    print("I'm HERE");
 
                     return GridView.builder(
                       padding: EdgeInsets.only(
@@ -122,13 +126,10 @@ class _GridWidgetState extends State<GridWidget> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            print("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE");
-                            print(categoriasData[index].nomeCategoria);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => CategoryDetailsPage(
-                                  //categoriasData[index].construirObjeto(categoriasData[index].id, categoriasData[index].nomeCategoria, categoriasData[index].idCategoria, categoriasData[index].videos),
                                   categoriaClasse: categoriasData[index],
                                   video: categoriasData[index].videos,
                                   categoriaNome:

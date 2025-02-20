@@ -1,13 +1,13 @@
 class Video {
-  final String nome;
-  final String link;
+  String nome;
+  String link;
 
   Video({required this.nome, required this.link});
 
   factory Video.fromJson(Map<String, dynamic> json) {
     return Video(
-      nome: json['Nome'] ?? 'Sem nome',
-      link: json['Link'] ?? '',
+      nome: json['Nome'], // "Nome" no JSON tem "N" maiúsculo
+      link: json['Link'], // "Link" no JSON tem "L" maiúsculo
     );
   }
 
