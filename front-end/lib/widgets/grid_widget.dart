@@ -9,6 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 IconData getIconFromCategoryName(String categoryName) {
   switch (categoryName) {
+    case 'Spotify':
+        return FontAwesomeIcons.spotify;
     case 'Whatsapp':
       return FontAwesomeIcons.whatsapp;
     case 'Instagram':
@@ -40,8 +42,31 @@ class _GridWidgetState extends State<GridWidget> {
   @override
   void initState() {
     super.initState();
-    categorias = ApiService().fetchCategorias(); // Consumindo a API
+    categorias = ApiService().fetchCategorias(); // 🔹 Buscando as categorias via API
+
+    print("🚀 Buscando categorias da API...");
+
+    categorias.then((listaDeCategorias) {
+      print("✅ Dados recebidos da API:");
+
+      for (var categoria in listaDeCategorias) {
+        print("📂 Categoria: ${categoria.nomeCategoria}, ID: ${categoria.idCategoria}");
+
+        if (categoria.videos.isEmpty) {
+          print("   🎬 Nenhum vídeo disponível.");
+        } else {
+          print("   🎬 Vídeos:");
+          for (var video in categoria.videos) {
+            print("      🎥 Nome: ${video.nome}, 🔗 Link: ${video.link}");
+          }
+        }
+        print("----------------------------------------");
+      }
+    }).catchError((error) {
+      print("⚠ Erro ao buscar categorias: $error");
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +122,15 @@ class _GridWidgetState extends State<GridWidget> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
+                            print("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE");
+                            print(categoriasData[index].nomeCategoria);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => CategoryDetailsPage(
+                                  //categoriasData[index].construirObjeto(categoriasData[index].id, categoriasData[index].nomeCategoria, categoriasData[index].idCategoria, categoriasData[index].videos),
+                                  categoriaClasse: categoriasData[index],
+                                  video: categoriasData[index].videos,
                                   categoriaNome:
                                       categoriasData[index].nomeCategoria,
                                   iconeCategoria: getIconFromCategoryName(

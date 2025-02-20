@@ -5,6 +5,7 @@ class CategoryContent extends StatelessWidget {
   final String categoryName;
   final IconData itemCurso;
   final String topicCategory;
+  final String linkYoutube;
 
   // const ContentCategory(required String categoryName,  IconData itemCurso, {super.key});
 
@@ -12,7 +13,8 @@ class CategoryContent extends StatelessWidget {
       {Key? key,
       required this.categoryName,
       required this.itemCurso,
-      required this.topicCategory})
+      required this.topicCategory,
+      required this.linkYoutube})
       : super(key: key);
 
   @override

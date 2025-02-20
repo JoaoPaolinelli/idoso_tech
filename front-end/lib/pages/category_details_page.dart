@@ -1,16 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+import '../model/categoria.dart';
+import '../model/video.dart';
 import '../widgets/category_content_list_widget.dart';
 
-class CategoryDetailsPage extends StatelessWidget {
-  // final Object categoryName;
+class CategoryDetailsPage extends StatefulWidget {
+  final Categoria categoriaClasse;
   final String categoriaNome;
   final IconData iconeCategoria;
+  final List<Video> video;
 
-  const CategoryDetailsPage(
-      {Key? key, required this.categoriaNome, required this.iconeCategoria})
-      : super(key: key);
+
+  const CategoryDetailsPage({
+    Key? key,
+    required this.categoriaClasse,
+    required this.categoriaNome,
+    required this.iconeCategoria,
+    required this.video
+  }) : super(key: key);
+
+  @override
+  _CategoryDetailsPageState createState() => _CategoryDetailsPageState();
+}
+
+class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
+  List<dynamic> videos = [];
+  bool isLoading = true;
+  bool hasError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchVideos();
+  }
+
+  Future<void> _fetchVideos() async {
+    try {
+      final response =
+      await http.get(Uri.parse('http://localhost:8080/videos/show'));
+      print("YEEEEEEEEEEEEEEEEEEEAH");
+      print(widget.categoriaClasse.videos);
+      if (response.statusCode == 200) {
+        setState(() {
+          videos = jsonDecode(response.body);
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Falha ao carregar os vídeos');
+      }
+
+    } catch (e) {
+      setState(() {
+        hasError = true;
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,69 +82,66 @@ class CategoryDetailsPage extends StatelessWidget {
                     bottomRight: Radius.circular(20),
                   ),
                   child: Container(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      height: 202,
-                      // alignment: Alignment.center,
-                      child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    height: 202,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(Icons.arrow_back),
+                              ),
+                              Row(
                                 children: [
                                   IconButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      icon: Icon(Icons.arrow_back)),
-                                  Row(
-                                    children: [
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                              FontAwesomeIcons.searchengin)),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(FontAwesomeIcons.bell)),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(FontAwesomeIcons.heart)),
-                                    ],
-                                  )
+                                      onPressed: () {},
+                                      icon: Icon(
+                                          FontAwesomeIcons.searchengin)),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(FontAwesomeIcons.bell)),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(FontAwesomeIcons.heart)),
                                 ],
-                              )),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 30, bottom: 20),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      categoriaNome,
-                                      style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding:
+                              const EdgeInsets.only(left: 30, bottom: 20),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    widget.categoriaNome,
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               Positioned(
                 bottom: -23,
-
                 left: 16,
-                //  MediaQuery.of(context).size.width / 2 - 80,
                 child: ElevatedButton.icon(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -123,14 +168,24 @@ class CategoryDetailsPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 45,
-          ),
-          // Text('Teste do Joao'),
+          SizedBox(height: 45),
+          Expanded(
+            child: isLoading
+                ? Center(child: CircularProgressIndicator())
+                : hasError
+                ? Center(
+              child: Text(
+                'Erro ao carregar vídeos',
+                style: TextStyle(color: Colors.red, fontSize: 18),
+              ),
+            )
+                : CategoryDetailsListWidget(
 
-          CategoryDetailsListWidget(
-            categoryName: categoriaNome,
-            iconeCategory: iconeCategoria,
+              categoryName: widget.categoriaNome,
+              iconeCategory: widget.iconeCategoria,
+              video:  widget.video,
+              idCategory: "0", categoriaClasse: widget.categoriaClasse //assando os vídeos para o widget
+            ),
           ),
         ],
       ),

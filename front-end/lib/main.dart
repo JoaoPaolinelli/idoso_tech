@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:idosotech/pages/pagina_teste.dart';
 
 import 'pages/home-page.dart';
 
