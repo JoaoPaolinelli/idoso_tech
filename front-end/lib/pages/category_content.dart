@@ -70,8 +70,8 @@ class _CategoryContentState extends State<CategoryContent> {
           // 🔹 Substituímos o ícone de play pelo player do YouTube
           Container(
 
-            width: 350,
-            height: 350,
+            width: 400,
+            height: 400,
             decoration: BoxDecoration(
               color: Colors.black26,
               borderRadius: BorderRadius.circular(20),

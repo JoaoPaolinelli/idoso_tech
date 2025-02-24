@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../model/categoria.dart';
 import '../model/video.dart';
 import '../pages/category_content.dart';
@@ -19,6 +20,8 @@ class CategoryDetailsListWidget extends StatefulWidget {
 
 class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
   late List<Video> _videos;
+
+  bool isFavorited = false;
 
   late  Video videoRender;
 
@@ -97,6 +100,7 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
                                   children: [
+                                    Icon(Icons.bookmark_add),
                                     Text(
                                       _videos[index].nome ?? 'Título não disponível',
                                       style: const TextStyle(
@@ -104,18 +108,27 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const Icon(
-                                      Icons.star_border,
-                                      color: Colors.black54,
-                                    ),
+
+                                    IconButton(onPressed: () {
+                                      setState(() {
+                                        isFavorited = !isFavorited;
+                                      });
+                                    },
+                                    icon:
+                                    Icon(
+                                      isFavorited ? Icons.star : Icons.star,
+
+                                      color: isFavorited ? Colors.black54 : Colors.amber,
+                                    ),),
                                   ],
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Text(
-                                _videos[index].link ?? 'Sem link disponível',
-                                style: const TextStyle(color: Colors.grey),
-                              ),
+                              // Text(
+                              //   // _videos[index].isAssistido == "false"? 'ja foi assistido' : 'Nao foi assistido',
+                              //   _videos[index].link ?? 'Sem link disponível',
+                              //   style: const TextStyle(color: Colors.grey),
+                              // ),
                               const SizedBox(height: 8),
                               Container(
                                 height: 2,

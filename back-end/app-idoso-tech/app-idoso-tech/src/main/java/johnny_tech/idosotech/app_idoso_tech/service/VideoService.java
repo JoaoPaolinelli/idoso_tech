@@ -17,7 +17,5 @@ public class VideoService {
     public List<Video> listAllVideos() {
         return videoRepository.findAll();
     }
-
-   
-    
+ 
 }
