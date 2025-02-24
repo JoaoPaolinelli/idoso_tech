@@ -16,7 +16,7 @@ class SignInPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                child: Text('data'),
+                // child: Text('data'),
                 height: 60,
               ),
               Expanded(
@@ -29,8 +29,9 @@ class SignInPage extends StatelessWidget {
 
               Text('Você conectado ',style: AppTextStyles.mediumText.copyWith(color: AppColors.appPrimaryColor),),
 
-              Text('Tecnologia', style: AppTextStyles.mediumText.copyWith(color: AppColors.appPrimaryColor),),
+              Text(' a tecnologia', style: AppTextStyles.mediumText.copyWith(color: AppColors.appPrimaryColor),),
 
+              
               Padding(padding:
               EdgeInsets.all(16.0),
                 child: BotaoPrimario(

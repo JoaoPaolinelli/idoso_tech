@@ -40,9 +40,6 @@ class NewUser extends StatelessWidget {
                     CustomTextFormField(),
                     CustomTextFormField(),
                     CustomTextFormField(),
-                    CustomTextFormField(),
-                    CustomTextFormField(),
-                    CustomTextFormField(),
 
                   ],
                 ))
