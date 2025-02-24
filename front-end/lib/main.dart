@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:idosotech/pages/onboarding/tela_inicial.dart';
+import 'package:idosotech/pages/onboarding/widgets/splash_effect.dart';
 import 'package:idosotech/pages/pagina_teste.dart';
 
 import 'pages/home-page.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: TelaInicial(),
       debugShowCheckedModeBanner: false,
     );
   }
