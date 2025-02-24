@@ -104,7 +104,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    widget.categoriaNome,
+                                    widget.categoriaClasse.nomeCategoria,
                                     style: TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold),
@@ -150,21 +150,19 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
           ),
           SizedBox(height: 45),
           Expanded(
-            child: isLoading
-                ? Center(child: CircularProgressIndicator())
-                : hasError
-                ? Center(
-              child: Text(
-                'Erro ao carregar vídeos',
-                style: TextStyle(color: Colors.red, fontSize: 18),
-              ),
-            )
-                : CategoryDetailsListWidget(
-
-              categoryName: widget.categoriaNome,
-              iconeCategory: widget.iconeCategoria,
-              video:  widget.video,
-              idCategory: "0", categoriaClasse: widget.categoriaClasse //assando os vídeos para o widget
+            child:
+            // isLoading
+            //     ? Center(child: CircularProgressIndicator())
+            //     : hasError
+            //     ? Center(
+            //   child: Text(
+            //     'Erro ao carregar vídeos',
+            //     style: TextStyle(color: Colors.red, fontSize: 18),
+            //   ),
+            // )
+            //     :
+            CategoryDetailsListWidget(
+              categoriaClasse: widget.categoriaClasse
             ),
           ),
         ],

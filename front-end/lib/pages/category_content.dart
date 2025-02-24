@@ -1,21 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:idosotech/widgets/category_details_header_widget.dart';
+import 'package:idosotech/pages/home-page.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class CategoryContent extends StatelessWidget {
-  final String categoryName;
-  final IconData itemCurso;
-  final String topicCategory;
-  final String linkYoutube;
+import '../model/categoria.dart';
+import '../model/video.dart';
+import '../widgets/category_details_header_widget.dart';
 
-  // const ContentCategory(required String categoryName,  IconData itemCurso, {super.key});
+class CategoryContent extends StatefulWidget {
+  final Categoria categoriaClasse;
+  final Video videos;
 
-  const CategoryContent(
-      {Key? key,
-      required this.categoryName,
-      required this.itemCurso,
-      required this.topicCategory,
-      required this.linkYoutube})
-      : super(key: key);
+  const CategoryContent({
+    Key? key,
+    required this.categoriaClasse,
+    required this.videos,
+  }) : super(key: key);
+
+  @override
+  _CategoryContentState createState() => _CategoryContentState();
+}
+
+class _CategoryContentState extends State<CategoryContent> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final videoId = YoutubePlayer.convertUrlToId(widget.videos.link) ?? ''; // 🔹 Extrai o ID do vídeo
+
+    _controller = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+        enableCaption: true,
+        controlsVisibleAtStart: true,
+        isLive: false,
+        forceHD: true,
+        showLiveFullscreenButton: false,
+        disableDragSeek: false,
+
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // 🔹 Libera o controlador ao sair da tela
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,36 +57,46 @@ class CategoryContent extends StatelessWidget {
       body: Column(
         children: [
           CategoryDetailsHeaderWidget(
-            categoryName: categoryName,
-            itemCurso: itemCurso,
-            topicCategory: topicCategory,
+            categoriaClasse: widget.categoriaClasse,
+            videos: widget.videos,
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           Text(
-            'Introducao',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            widget.videos.nome,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
+
+          // 🔹 Substituímos o ícone de play pelo player do YouTube
           Container(
-            width: 300,
+
+            width: 350,
             height: 350,
             decoration: BoxDecoration(
               color: Colors.black26,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: Colors.black,
+                width: 4,
+              )
             ),
-            child: Icon(
-              Icons.play_arrow,
-              size: 50,
-              color: Colors.white,
-            ),
+            child:
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              child:
+            ClipRRect(
+
+              borderRadius: BorderRadius.circular(16),
+              child: YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              progressIndicatorColor: Colors.red,
+            ),),),
           ),
-          SizedBox(
-            height: 30,
-          ),
+
+          const SizedBox(height: 30),
+
+          // 🔹 Caixa de Classificação e Dúvidas
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             padding: const EdgeInsets.all(10),
@@ -68,110 +112,73 @@ class CategoryContent extends StatelessWidget {
                   children: [
                     const Text(
                       'Classifique essa aula',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     Row(
-                      children: [
-                        const Icon(Icons.star_border, size: 30),
-                        const Icon(Icons.star_border, size: 30),
-                        const Icon(Icons.star_border, size: 30),
-                        const Icon(Icons.star_border, size: 30),
-                        const Icon(Icons.star_border, size: 30),
-                      ],
+                      children: List.generate(5, (index) => const Icon(Icons.star_border, size: 30)),
                     )
                   ],
                 ),
-                Divider(
-                  color: Colors.black, // Cor da linha
-                  thickness: 1, // Espessura da linha
-                  indent: 10, // Recuo no início
-                  endIndent: 10, // Recuo no final
-                ),
+                const Divider(thickness: 1),
                 const SizedBox(height: 10),
                 const Text(
                   'Ficou alguma dúvida? Clique aqui',
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
           ),
 
-          SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
 
-          // Botões "Sair" e "Próximo"
+          // 🔹 Botões "Sair" e "Próximo"
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.pop(context); // Voltar para a tela anterior
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(132, 193, 243, 100),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 48, vertical: 24),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                    ),
-                    label: const Text(
-                      'Voltar',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
+              _buildNavigationButton(
+                context,
+                "Voltar",
+                Icons.arrow_back,
+                    () => Navigator.pop(context),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.pop(context); // Voltar para a tela anterior
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(132, 193, 243, 100),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 48, vertical: 24),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    icon: const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.black,
-                    ),
-                    label: const Text(
-                      'Proximo',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
+              _buildNavigationButton(
+                context,
+                "Início",
+                Icons.house,
+                    () => Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                        (route) => false,)
+                // Aqui você pode definir outra lógica
               ),
             ],
           ),
+
           const SizedBox(height: 20),
         ],
+      ),
+    );
+  }
+
+  // 🔹 Função auxiliar para criar os botões de navegação
+  Widget _buildNavigationButton(BuildContext context, String text, IconData icon, VoidCallback onPressed) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        child: ElevatedButton.icon(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(132, 193, 243, 100),
+            padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+          icon: Icon(icon, color: Colors.black),
+          label: Text(
+            text,
+            style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
     );
   }

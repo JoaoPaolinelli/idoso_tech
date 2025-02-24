@@ -17,4 +17,13 @@ class Video {
       'Link': link,
     };
   }
+
+  String getLink() {
+    return this.link;
+  }
+
+  String getNome() {
+    return this.nome;
+  }
+
 }

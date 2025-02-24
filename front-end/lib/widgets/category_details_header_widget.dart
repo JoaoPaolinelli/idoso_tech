@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../model/categoria.dart';
+import '../model/video.dart';
+
 class CategoryDetailsHeaderWidget extends StatelessWidget {
-  final String categoryName;
-  final IconData itemCurso;
-  final String topicCategory;
+  final Categoria categoriaClasse;
+  final Video videos;
 
   const CategoryDetailsHeaderWidget(
       {Key? key,
-      required this.categoryName,
-      required this.itemCurso,
-      required this.topicCategory})
+      required this.categoriaClasse,
+      required this.videos,
+      })
       : super(key: key);
 
   @override
@@ -69,7 +71,8 @@ class CategoryDetailsHeaderWidget extends StatelessWidget {
                         children: [
                           // Icon(itemCurso),
                           Text(
-                            topicCategory + ' - ' + categoryName,
+                            categoriaClasse.nomeCategoria,
+                            // topicCategory + ' - ' + categoryName,
                             // '$categoryName' + ' $itemCurso',
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),

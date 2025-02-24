@@ -5,18 +5,11 @@ import '../pages/category_content.dart';
 
 class CategoryDetailsListWidget extends StatefulWidget {
   final Categoria categoriaClasse;
-  final String categoryName;
-  final IconData iconeCategory;
-  final String idCategory;
-  final List<Video> video;
+
 
   const CategoryDetailsListWidget({
     Key? key,
     required this.categoriaClasse,
-    required this.categoryName,
-    required this.iconeCategory,
-    required this.idCategory,
-    required this.video,
   }) : super(key: key);
 
   @override
@@ -25,29 +18,42 @@ class CategoryDetailsListWidget extends StatefulWidget {
 }
 
 class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
-  late List<Video> videos;
+  late List<Video> _videos;
+
+  late  Video videoRender;
 
   @override
   void initState() {
     super.initState();
+    _loadVideos(); // Carrega os vídeos ao iniciar a tela
     // 🔹 Pegando os vídeos diretamente da categoria
-    videos = widget.video ?? [];
 
     print('📌 Vídeos da categoria: ${widget.categoriaClasse.videos}');
-    print(videos);
+
+    // videoList.add(widget.categoriaClasse.videos.map( (data) =>"${data.nome},  ${data.link}"));
+
+  }
+  void _loadVideos() {
+      setState(() {
+        _videos = widget.categoriaClasse.videos;
+      });
+      print("\n\n\n\n\n\n\n\\n\n");
+      print("Caaaaaarregou ?");
+      for(var video in _videos) {
+        print("Nome: ${video.nome}, \nLink: ${video.link}");
+      }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ClipRRect(
+    return ClipRRect(
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         child: Container(
           color: Colors.white,
           child: Stack(
             children: [
-              if (videos.isEmpty)
+              if (_videos.isEmpty)
                 const Center(
                   child: Text(
                     'Nenhum vídeo disponível',
@@ -60,10 +66,9 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
                   const EdgeInsets.only(bottom: 80), // Espaço para o botão
                   child: ListView.builder(
                     padding: const EdgeInsets.all(32),
-                    itemCount: videos.length,
+                    itemCount: widget.categoriaClasse.videos.length,
                     itemBuilder: (context, index) {
-                      final video = videos[index];
-
+                      final video = widget.categoriaClasse.videos;
                       return Card(
                         color: Colors.white,
                         margin: const EdgeInsets.only(bottom: 16),
@@ -82,10 +87,8 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CategoryContent(
-                                        categoryName: widget.categoryName,
-                                        itemCurso: widget.iconeCategory,
-                                        topicCategory: video.nome ?? 'Sem título',
-                                        linkYoutube: video.link ?? '',
+                                        categoriaClasse: widget.categoriaClasse,
+                                        videos: _videos[index],
                                       ),
                                     ),
                                   );
@@ -95,7 +98,7 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
                                   MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      video.nome ?? 'Título não disponível',
+                                      _videos[index].nome ?? 'Título não disponível',
                                       style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -110,7 +113,7 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                video.link ?? 'Sem link disponível',
+                                _videos[index].link ?? 'Sem link disponível',
                                 style: const TextStyle(color: Colors.grey),
                               ),
                               const SizedBox(height: 8),
@@ -160,7 +163,6 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
