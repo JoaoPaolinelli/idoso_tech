@@ -22,7 +22,6 @@ class NewUser extends StatelessWidget {
 
             // Text('Tecnologia', style: AppTextStyles.mediumText.copyWith(color: AppColors.appPrimaryColor),),
             Expanded(
-
               flex: 1,
                 child: Container(
                   // color: AppColors.appPrimaryColor,
@@ -33,19 +32,31 @@ class NewUser extends StatelessWidget {
             SizedBox(height: 20,),
 
             Expanded(
-                flex: 2,
+                flex: 1,
                 child: Form(child: Column(
                   children: [
-                    CustomTextFormField(),
-                    CustomTextFormField(),
-                    CustomTextFormField(),
-                    CustomTextFormField(),
+                    CustomTextFormField(
+                      labelText: 'Seu nome',
+                      // hintText: 'João Silva',
+                    ),
+                    CustomTextFormField(
+                      labelText: 'Seu email',
+                      // hintText: 'joao@gmail.com',
+                    ),
+                    CustomTextFormField(
+                      labelText: 'Senha',
+                    ),
+                    CustomTextFormField(
+                      labelText: 'Confirmar senha',
+                    ),
 
                   ],
                 ))
             ),
+
+
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(16.0),
               child: Container(
                 width: 150,
                 child: BotaoPrimario(text: "Salvar"),

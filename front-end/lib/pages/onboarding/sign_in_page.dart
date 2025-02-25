@@ -17,10 +17,10 @@ class SignInPage extends StatelessWidget {
             children: [
               SizedBox(
                 // child: Text('data'),
-                height: 60,
+                height: 70,
               ),
               Expanded(
-                  flex: 2,
+                  flex: 3,
                   child:
                   Container(
                     // color: AppColors.appPrimaryColor,
@@ -28,10 +28,8 @@ class SignInPage extends StatelessWidget {
                   )),
 
               Text('Você conectado ',style: AppTextStyles.mediumText.copyWith(color: AppColors.appPrimaryColor),),
-
               Text(' a tecnologia', style: AppTextStyles.mediumText.copyWith(color: AppColors.appPrimaryColor),),
 
-              
               Padding(padding:
               EdgeInsets.all(16.0),
                 child: BotaoPrimario(

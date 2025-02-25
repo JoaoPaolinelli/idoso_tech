@@ -48,8 +48,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         textCapitalization: widget.textCapitalization?? TextCapitalization.none,
         decoration: InputDecoration(
 
-          // hintText: 'Ola',
-          labelText: "Seu nome".toUpperCase(),
+          hintText: widget.hintText?.toLowerCase(),
+          labelText: widget.labelText?.toUpperCase(),
           labelStyle: AppTextStyles.inputLabelText.copyWith(color: AppColors.appDarkGrey),
           floatingLabelBehavior:  FloatingLabelBehavior.always,
           // focusedBorder: Outlin,
