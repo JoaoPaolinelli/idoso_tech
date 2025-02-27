@@ -57,7 +57,14 @@ class NewUser extends StatelessWidget {
                 ))
             ),
 
+            // Flexible(
+            //   flex: 1,
+            //   child: Container(
+            //   width: 150,
+            //   child: BotaoPrimario(text: 'Salvar'),
+            // ),),
 
+            
             Padding(
               padding: EdgeInsets.all(16.0),
               child: Container(
