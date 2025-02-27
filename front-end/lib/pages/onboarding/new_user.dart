@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:idosotech/constantes/app_colors.dart';
 import 'package:idosotech/pages/onboarding/widgets/botao_primario.dart';
 import 'package:idosotech/pages/onboarding/widgets/custom_text_form_field.dart';
+import 'package:idosotech/pages/onboarding/widgets/password_form_field.dart';
 
 import '../../constantes/app_text_style.dart';
 
@@ -37,16 +38,18 @@ class NewUser extends StatelessWidget {
                   children: [
                     CustomTextFormField(
                       labelText: 'Seu nome',
-                      // hintText: 'João Silva',
+
+                      // hintText: 'João de oliveira',
                     ),
                     CustomTextFormField(
                       labelText: 'Seu email',
-                      // hintText: 'joao@gmail.com',
+                      // hintText: 'oliveira@gmail.com',
                     ),
-                    CustomTextFormField(
+                    PasswordFormField(
                       labelText: 'Senha',
+
                     ),
-                    CustomTextFormField(
+                    PasswordFormField(
                       labelText: 'Confirmar senha',
                     ),
 
