@@ -20,6 +20,7 @@ class CategoryDetailsListWidget extends StatefulWidget {
 
 class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
   late List<Video> _videos;
+  List<bool> isFavoritedList = []; // Lista para armazenar favoritos
 
   bool isFavorited = false;
 
@@ -30,12 +31,13 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
     super.initState();
     _loadVideos(); // Carrega os vídeos ao iniciar a tela
     // 🔹 Pegando os vídeos diretamente da categoria
-
+    isFavoritedList = List.generate(_videos.length, (index) => false); // Inicializa como falso para todos
     print('📌 Vídeos da categoria: ${widget.categoriaClasse.videos}');
 
     // videoList.add(widget.categoriaClasse.videos.map( (data) =>"${data.nome},  ${data.link}"));
 
   }
+
   void _loadVideos() {
       setState(() {
         _videos = widget.categoriaClasse.videos;
@@ -98,9 +100,10 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
                                 },
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.start,
                                   children: [
                                     Icon(Icons.bookmark_add),
+                                    Padding(padding: EdgeInsets.only(left: 10)),
                                     Text(
                                       _videos[index].nome ?? 'Título não disponível',
                                       style: const TextStyle(
@@ -108,17 +111,17 @@ class _CategoryDetailsListWidgetState extends State<CategoryDetailsListWidget> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-
+                                    Spacer(),
                                     IconButton(onPressed: () {
                                       setState(() {
                                         isFavorited = !isFavorited;
+                                        isFavoritedList[index] = !isFavoritedList[index]; // Alterna o estado do item específico
                                       });
                                     },
                                     icon:
                                     Icon(
-                                      isFavorited ? Icons.star : Icons.star,
-
-                                      color: isFavorited ? Colors.black54 : Colors.amber,
+                                      isFavoritedList[index] ? Icons.star : Icons.star_border, // Ícone alternável
+                                      color: isFavoritedList[index] ? Colors.amber : Colors.black54, // Cor alternável
                                     ),),
                                   ],
                                 ),
