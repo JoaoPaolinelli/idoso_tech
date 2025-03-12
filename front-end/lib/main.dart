@@ -4,6 +4,7 @@ import 'package:idosotech/pages/onboarding/sign_in_page.dart';
 import 'package:idosotech/pages/onboarding/tela_inicial.dart';
 import 'package:idosotech/pages/onboarding/widgets/splash_effect.dart';
 import 'package:idosotech/pages/pagina_teste.dart';
+import 'package:idosotech/pages/tesouraria/details_tesouraria.dart';
 import 'package:idosotech/pages/tesouraria/home_page_tesouraria.dart';
 
 import 'pages/home-page.dart';
@@ -24,7 +25,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePageTesouraria(),
+      home:
+      // HomePageTesouraria(),
+      DetailsTesourariaPage(),
       debugShowCheckedModeBanner: false,
     );
   }

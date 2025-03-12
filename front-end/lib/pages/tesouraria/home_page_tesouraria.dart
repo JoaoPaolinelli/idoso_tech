@@ -22,6 +22,7 @@ class _HomePageTesourariaState extends State<HomePageTesouraria> {
 
           children: [
             Title(color: AppColors.appPrimaryColor, child: Text("Tesouraria", style: AppTextStyles.tesourariaTitle,)),
+            SizedBox(height: 10,),
             Text("Acompanhe aqui os gastos da gestão", style: TextStyle(
               fontSize: 12,
               letterSpacing: 12 * 0.05,
