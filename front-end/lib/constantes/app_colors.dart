@@ -9,6 +9,8 @@ class AppColors {
   static final Color appSecondaryColor = Color(0xFF84C1F3);
   static final Color appWhiteColor  = Color(0xFFFFFFFF);
   static final Color appDarkGrey = Color(0xFF666666);
+  static final Color appLightGrey = Color(0xFFEEF2F5);
+  static final Color appBackgroundColor = Color(0xFFF2EFE8);
 
 
 

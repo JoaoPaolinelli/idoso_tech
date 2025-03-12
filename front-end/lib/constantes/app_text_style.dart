@@ -4,6 +4,40 @@ class AppTextStyles {
   AppTextStyles._();
 
 
+  static final TextStyle tesourariaTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w700,
+    fontSize: 20,
+  );
+
+  static final TextStyle tesourariaSubTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
+  );
+
+
+  static final TextStyle tesourariaLabelFinanceSimpleText = TextStyle(
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w700,
+      fontSize: 10,
+  );
+
+  static final TextStyle tesourariaLabelFinanceGreen = TextStyle(
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w700,
+    fontSize: 10,
+    color: Colors.green
+  );
+
+  static final TextStyle tesourariaLabelFinanceRed = TextStyle(
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.w700,
+      fontSize: 10,
+      color: Colors.red
+  );
+
+
   static final TextStyle bigText = TextStyle(
     fontFamily: 'Inter',
     fontWeight: FontWeight.w700,
