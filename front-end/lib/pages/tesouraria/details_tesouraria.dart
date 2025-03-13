@@ -6,7 +6,7 @@ class DetailsTesourariaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: TesourariaMesPage(),
+      body: TesourariaMesPage(),
     );
   }
 }
@@ -30,7 +30,8 @@ class TesourariaMesPage extends StatelessWidget {
           style: TextStyle(color: Colors.black, fontSize: 14),
         ),
       ),
-      body: SingleChildScrollView( // Permite rolar a tela
+      body: SingleChildScrollView(
+        // Permite rolar a tela
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
@@ -177,4 +178,3 @@ class TesourariaMesPage extends StatelessWidget {
     );
   }
 }
-

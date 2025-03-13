@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:idosotech/constantes/app_colors.dart';
+import 'package:idosotech/pages/tesouraria/details_tesouraria.dart';
 
 import '../../constantes/app_text_style.dart';
 
@@ -19,32 +20,35 @@ class _HomePageTesourariaState extends State<HomePageTesouraria> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
-            Title(color: AppColors.appPrimaryColor, child: Text("Tesouraria", style: AppTextStyles.tesourariaTitle,)),
-            SizedBox(height: 10,),
-            Text("Acompanhe aqui os gastos da gestão", style: TextStyle(
-              fontSize: 12,
-              letterSpacing: 12 * 0.05,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w600,
-            ),),
-
+            Title(
+                color: AppColors.appPrimaryColor,
+                child: Text(
+                  "Tesouraria",
+                  style: AppTextStyles.tesourariaTitle,
+                )),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Acompanhe aqui os gastos da gestão",
+              style: TextStyle(
+                fontSize: 12,
+                letterSpacing: 12 * 0.05,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             WhiteContainer(),
-
             DespesasCategoriaWidget(),
-
-            SizedBox(height: 10,),
-
+            SizedBox(
+              height: 10,
+            ),
             FaturasFechadasWidget(),
-
-            SizedBox(height: 10,),
-
+            SizedBox(
+              height: 10,
+            ),
             FaturaEventosWidget(),
-
-
-
-
           ],
         ),
       ),
@@ -52,13 +56,11 @@ class _HomePageTesourariaState extends State<HomePageTesouraria> {
   }
 }
 
-
 class FaturaEventosWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-      EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white, // Fundo branco externo
@@ -73,7 +75,8 @@ class FaturaEventosWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16), // Padding interno do botão
+              padding: EdgeInsets.symmetric(
+                  horizontal: 16), // Padding interno do botão
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -129,13 +132,18 @@ class DespesasCategoriaWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: AppColors.appWhiteColor,
       ),
-    
       child: Column(
         children: [
-          SizedBox(height: 8,),
-            Text("Despesas por categoria", style: AppTextStyles.tesourariaSubTitle,),
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            "Despesas por categoria",
+            style: AppTextStyles.tesourariaSubTitle,
+          ),
           Padding(
-            padding: const EdgeInsets.only(left: 10,right: 10,top: 5, bottom: 5),
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
             child: Container(
               decoration: BoxDecoration(
                 color: AppColors.appLightGrey,
@@ -145,39 +153,29 @@ class DespesasCategoriaWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-    
                   Container(
                     width: 150,
                     height: 150,
                     // color: AppColors.appDarkGrey,
-                    child: PieChart(
-                      PieChartData(
-                        sectionsSpace: 0,
-                        centerSpaceRadius: 40,
-                        sections: _getSections(),
-    
-                      )
-                    ),
+                    child: PieChart(PieChartData(
+                      sectionsSpace: 0,
+                      centerSpaceRadius: 40,
+                      sections: _getSections(),
+                    )),
                   ),
-    
-                  SizedBox(width: 16,),
-    
-    
+                  SizedBox(
+                    width: 16,
+                  ),
                   _buildLegend(),
                 ],
               ),
             ),
           ),
-    
-    
-    
         ],
       ),
-    
     );
   }
 }
-
 
 class FaturasFechadasWidget extends StatelessWidget {
   @override
@@ -216,10 +214,11 @@ class FaturasFechadasWidget extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                _buildFaturaItem("Dezembro"),
-                _buildFaturaItem("Janeiro"),
-                _buildFaturaItem("Fevereiro"),
-                _buildFaturaItem("Março"), // Adicionando um extra para demonstrar o scroll
+                _buildFaturaItem(context, "Dezembro"),
+                _buildFaturaItem(context, "Janeiro"),
+                _buildFaturaItem(context, "Fevereiro"),
+                _buildFaturaItem(context,
+                    "Março"), // Adicionando um extra para demonstrar o scroll
               ],
             ),
           ),
@@ -229,38 +228,42 @@ class FaturasFechadasWidget extends StatelessWidget {
   }
 
   // Widget de cada item da lista
-  Widget _buildFaturaItem(String mes) {
-    return Container(
-      width: 90,
-      margin: EdgeInsets.only(right: 8), // Espaçamento entre os itens
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.attach_money, size: 28, color: Colors.black),
-          SizedBox(height: 6),
-          Text(
-            mes,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-        ],
+  Widget _buildFaturaItem(BuildContext context, String mes) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => DetailsTesourariaPage()));
+      },
+      child: Container(
+        width: 90,
+        margin: EdgeInsets.only(right: 8), // Espaçamento entre os itens
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.attach_money, size: 28, color: Colors.black),
+            SizedBox(height: 6),
+            Text(
+              mes,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
-
 
 class WhiteContainer extends StatelessWidget {
   const WhiteContainer({
@@ -278,9 +281,8 @@ class WhiteContainer extends StatelessWidget {
         height: 180,
         width: 373,
         decoration: BoxDecoration(
-          color: AppColors.appWhiteColor,
-          borderRadius: BorderRadius.circular(16)
-        ),
+            color: AppColors.appWhiteColor,
+            borderRadius: BorderRadius.circular(16)),
         // color: AppColors.appWhiteColor,
 
         // # Saldo em Conta
@@ -288,17 +290,28 @@ class WhiteContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 8,),
+            SizedBox(
+              height: 8,
+            ),
             Column(
               children: [
-                Title(color: AppColors.appPrimaryColor, child: Text("Saldo em Conta",style:
-                TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),)),
-                SizedBox(height: 8,),
-                Title(color: AppColors.appPrimaryColor, child: Text("10.000,00", style: AppTextStyles.tesourariaSubTitle)),
+                Title(
+                    color: AppColors.appPrimaryColor,
+                    child: Text(
+                      "Saldo em Conta",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    )),
+                SizedBox(
+                  height: 8,
+                ),
+                Title(
+                    color: AppColors.appPrimaryColor,
+                    child: Text("10.000,00",
+                        style: AppTextStyles.tesourariaSubTitle)),
               ],
             ),
             Spacer(),
@@ -308,16 +321,24 @@ class WhiteContainer extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-
                     Row(
                       children: [
-                        Icon(Icons.arrow_upward, color: Colors.green,),
+                        Icon(
+                          Icons.arrow_upward,
+                          color: Colors.green,
+                        ),
                         Padding(padding: EdgeInsets.only(right: 2)),
                         Column(
                           children: [
-                            Text("Receitas", style: AppTextStyles.tesourariaLabelFinanceSimpleText,),
-                            Text("R\$10.000,00", style: AppTextStyles.tesourariaLabelFinanceGreen,),
-
+                            Text(
+                              "Receitas",
+                              style: AppTextStyles
+                                  .tesourariaLabelFinanceSimpleText,
+                            ),
+                            Text(
+                              "R\$10.000,00",
+                              style: AppTextStyles.tesourariaLabelFinanceGreen,
+                            ),
                           ],
                         ),
                       ],
@@ -325,12 +346,20 @@ class WhiteContainer extends StatelessWidget {
 
                     Row(
                       children: [
-                        Icon(Icons.arrow_downward, color: Colors.red,),
+                        Icon(
+                          Icons.arrow_downward,
+                          color: Colors.red,
+                        ),
                         Padding(padding: EdgeInsets.only(right: 2)),
                         Column(
                           children: [
-                            Text("Despesas", style: AppTextStyles.tesourariaLabelFinanceSimpleText),
-                            Text("R\$1.250,00", style: AppTextStyles.tesourariaLabelFinanceRed,),
+                            Text("Despesas",
+                                style: AppTextStyles
+                                    .tesourariaLabelFinanceSimpleText),
+                            Text(
+                              "R\$1.250,00",
+                              style: AppTextStyles.tesourariaLabelFinanceRed,
+                            ),
                           ],
                         ),
                       ],
@@ -339,16 +368,18 @@ class WhiteContainer extends StatelessWidget {
                     // SizedBox(width: 8,)
                   ],
                 ),
-                SizedBox(height: 24,)
+                SizedBox(
+                  height: 24,
+                )
               ],
             ),
-
-
           ],
         ),
       ),
     );
-  } Widget _buildFinanceItem({
+  }
+
+  Widget _buildFinanceItem({
     required IconData icon,
     required Color iconColor,
     required Color backgroundColor,
@@ -362,7 +393,8 @@ class WhiteContainer extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: backgroundColor.withOpacity(0.3), // Fundo levemente transparente
+            color: backgroundColor
+                .withOpacity(0.3), // Fundo levemente transparente
             shape: BoxShape.circle,
           ),
           child: Icon(icon, color: iconColor, size: 24),
@@ -392,7 +424,6 @@ class WhiteContainer extends StatelessWidget {
     );
   }
 }
-
 
 List<PieChartSectionData> _getSections() {
   return [
@@ -428,13 +459,17 @@ Widget _buildLegend() {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       _buildLegendItem("Alimentação", Colors.blue),
-      SizedBox(height: 8,),
+      SizedBox(
+        height: 8,
+      ),
       _buildLegendItem("Eventos", Colors.green),
-      SizedBox(height: 8,),
-
+      SizedBox(
+        height: 8,
+      ),
       _buildLegendItem("Estrutura", Colors.red),
-      SizedBox(height: 8,),
-
+      SizedBox(
+        height: 8,
+      ),
       _buildLegendItem("Manutenção", Colors.yellow),
     ],
   );
@@ -453,12 +488,14 @@ Widget _buildLegendItem(String title, Color color) {
         ),
       ),
       SizedBox(width: 8),
-      Text(title,style: TextStyle(
-        fontFamily: 'Inter',
-        fontSize: 10,
-        fontWeight: FontWeight.w700,
-      ),),
+      Text(
+        title,
+        style: TextStyle(
+          fontFamily: 'Inter',
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     ],
   );
 }
-
